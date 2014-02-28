@@ -1,20 +1,41 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition template="/WEB-INF/templates/padrao.xhtml"
-    xmlns="http://www.w3.org/1999/xhtml"
-    xmlns:ui="http://java.sun.com/jsf/facelets"
-    xmlns:h="http://java.sun.com/jsf/html"
-    xmlns:f="http://java.sun.com/jsf/core"
-    xmlns:p="http://primefaces.prime.com.tr/ui">
-    <ui:define name="title">#{msg['page.forca.title']}</ui:define>
-    <ui:define name="body">
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.prime.com.tr/ui">
+	<ui:define name="title">#{msg['page.forca.title']}</ui:define>
+	<ui:define name="body">
 
-        <h:form id="forcaForm">
-            <h:commandLink id="link" action="#{forcaBean.init}"
-                value="#{msg['page.forca.label.iniciar']}" />
-            <br />
-            <br />
-                
-        </h:form>
-    </ui:define>
+		<h:form id="forcaForm">
+			<h:commandLink id="link" action="#{forcaBean.init}"
+				value="#{msg['page.forca.label.iniciar']}" />
+			<br />
+			<br />
+			<h:panelGrid columns="3">
+			      <h:outputLabel 
+                    value="#{msg['page.forca.label.digite.palavra']}:" />
+
+				<p:inputText id="counter" value="#{forcaBean.typedWord}">
+					<p:ajax event="keyup" update="out,tries,mensagem" listener="#{forcaBean.updateWord}"/>
+				</p:inputText>
+
+				<h:outputText id="out" value="#{forcaBean.updatedWord}" />
+                 <br />
+                 <br />
+                 <h:outputLabel value="Tentativas Restantes" />   
+                <h:outputText id="tries" value="#{forcaBean.remainingTries}" />
+                <br />
+                <br />
+                <h:outputFormat id="mensagem"
+                value="#{forcaBean.mensagem}" styleClass="error">
+                <f:param value="#{guessBean.tentativas}" />
+            </h:outputFormat>
+				
+			</h:panelGrid>
+
+		</h:form>
+	</ui:define>
 </ui:composition>
