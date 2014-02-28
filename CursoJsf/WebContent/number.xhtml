@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="title">#{msg['page.number.title']}</ui:define>
+    <ui:define name="body">
+
+        <h:form id="numberForm">
+            <h:outputLabel for="rangeField"
+                value="#{msg['page.number.maximo']}: " />
+            <h:inputText id="rangeField" value="#{numberBean.range}" />
+            <h:commandButton action="#{numberBean.randomize}"
+                value="#{msg['commons.novo']}" ajax="false">
+                <f:ajax execute="@form" render="rangeField numField"
+                    onevent="concluido" oneerror="erro" />
+            </h:commandButton>
+            <br />
+            <h:outputText value="#{msg['page.number.title']}: " />
+            <h:outputText id="numField" value="#{numberBean.number}" />
+            <hr />
+            <p:commandButton action="index"
+                value="#{msg['commons.voltar']}" ajax="false" />
+        </h:form>
+        <script type="text/javascript">
+			function concluido(data) {
+				alert("Evento: " + data.status);
+			}
+			function erro(data) {
+				alert("Erro: " + data);
+			}
+		</script>
+    </ui:define>
+</ui:composition>

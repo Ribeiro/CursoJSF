@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="title">#{msg['page.estadosEditar.title']}</ui:define>
+    <ui:define name="body">
+
+        <h:form id="estadoForm">
+            <h:message for="estadoForm" errorClass="error" />
+            <h:panelGrid columns="3" columnClasses="right,left,left">
+                <h:outputLabel for="idInput"
+                    value="#{msg['page.estados.label.id']}:" />
+                <h:inputText id="idInput"
+                    value="#{estadoBean.estado.id}" readonly="true"
+                    maxlength="10" size="10" />
+                <h:message for="idInput" errorClass="error" />
+
+                <h:outputLabel for="nomeInput"
+                    value="#{msg['page.estados.label.nome']}*:" />
+                <h:inputText id="nomeInput"
+                    value="#{estadoBean.estado.nome}" required="true"
+                    maxlength="20" size="20" />
+                <h:message for="nomeInput" errorClass="error" />
+
+                <h:outputLabel for="siglaInput"
+                    value="#{msg['page.estados.label.sigla']}*:" />
+                <h:inputText id="siglaInput"
+                    value="#{estadoBean.estado.sigla}" required="true"
+                    maxlength="5" size="5" />
+                <h:message for="siglaInput" errorClass="error" />
+            </h:panelGrid>
+            <p:dataTable value="#{estadoBean.estado.cidades}"
+                var="cidade" border="1" cellspacing="0" cellpadding="2">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.cidadesEditar.label.id']}" />
+                    </f:facet>
+                    <h:outputText value="#{cidade.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.cidadesEditar.label.nome']}" />
+                    </f:facet>
+                    <h:outputText value="#{cidade.nome}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.cidadesEditar.label.dataConstituicao']}" />
+                    </f:facet>
+                    <h:outputText value="#{cidade.dataConstituicao}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.cidadesEditar.label.populacao']}" />
+                    </f:facet>
+                    <h:outputText value="#{cidade.populacao}">
+                        <f:convertNumber groupingUsed="true"
+                            minIntegerDigits="1"
+                            locale="#{localeBean.locale}" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.cidadesEditar.label.pib']}" />
+                    </f:facet>
+                    <h:outputText value="#{cidade.pib}">
+                        <f:convertNumber groupingUsed="true"
+                            maxFractionDigits="2" minFractionDigits="2"
+                            minIntegerDigits="1"
+                            locale="#{localeBean.locale}" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.estados.label.editar']}" />
+                    </f:facet>
+                    <p:commandButton action="cidadesEditar"
+                        value="#{msg['page.estados.label.editar']}"
+                        ajax="false">
+                        <f:setPropertyActionListener
+                            target="#{cidadeBean.cidade}"
+                            value="#{cidade}" />
+                    </p:commandButton>
+                </p:column>
+                <f:facet name="footer">
+                    <p:commandButton action="#{cidadeBean.novo}"
+                        value="#{msg['commons.novo']}" ajax="false" />
+                </f:facet>
+            </p:dataTable>
+            <hr />
+            <p:commandButton action="#{estadoBean.salvar}"
+                value="#{msg['commons.salvar']}" ajax="false" />
+            <p:commandButton action="#{estadoBean.excluir}"
+                value="#{msg['commons.excluir']}" immediate="true"
+                ajax="false" />
+            <p:commandButton action="estados"
+                value="#{msg['commons.voltar']}" immediate="true"
+                ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>

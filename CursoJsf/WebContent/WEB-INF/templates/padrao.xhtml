@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+<h:head>
+    <title><h:outputText
+            value=": #{msg['application.name']} - #{msg['application.version']} : " />
+        <ui:insert name="title">#{msg['page.index.title']}</ui:insert></title>
+    <link type="text/css" rel="stylesheet"
+        href="#{request.contextPath}/themes/#{skinBean.skin}/skin.css" />
+    <h:outputStylesheet name="css/styles.css" />
+    <style type="text/css">
+        .ui-widget {
+            font-size: 80%;
+        }
+    </style>
+</h:head>
+
+<h:body>
+    <h:panelGroup layout="block" styleClass="ui-widget ui-widget-header"
+        style="padding: 6px; font-size: 130%">
+        <h:outputText value="#{msg['application.name']} - " />
+        <ui:insert name="title">#{msg['page.index.title']}</ui:insert>
+    </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="ui-widget">
+        <h:form>
+            <p:menubar autoSubmenuDisplay="true" zindex="100">
+                <p:menuitem value="#{msg['page.index.title']}"
+                    action="index?faces-redirect=true"
+                    icon="ui-icon ui-icon-home" ajax="false" />
+
+                <p:submenu label="#{msg['menu.label.exemplos']}"
+                    icon="ui-icon ui-icon-document">
+                    <p:menuitem value="#{msg['page.guess.title']}"
+                        action="#{guessBean.init}"
+                        icon="ui-icon ui-icon-document" ajax="false" />
+                    <p:menuitem value="#{msg['page.number.title']}"
+                        action="number?faces-redirect=true"
+                        icon="ui-icon ui-icon-document" ajax="false" />
+                     <p:menuitem value="#{msg['page.forca.title']}"
+                        action="#{forcaBean.init}"
+                        icon="ui-icon ui-icon-document" ajax="false" />
+                </p:submenu>
+
+                <p:submenu label="#{msg['menu.label.cadastros']}"
+                    icon="ui-icon ui-icon-pencil">
+                    <p:menuitem action="usuarios?faces-redirect=true"
+                        value="#{msg['page.usuarios.title']}"
+                        icon="ui-icon ui-icon-pencil" ajax="false" />
+                    <p:menuitem action="#{estadoBean.consultar}"
+                        value="#{msg['page.index.link.cadastroEstados']}"
+                        icon="ui-icon ui-icon-pencil" ajax="false" />
+                </p:submenu>
+
+                <p:submenu label="#{msg['menu.label.ajuda']}"
+                    icon="ui-icon ui-icon-help">
+                    <p:menuitem action="ajuda?faces-redirect=true"
+                        value="#{msg['menu.label.ajuda']}"
+                        icon="ui-icon ui-icon-help" ajax="false" />
+                    <p:menuitem url="contador.jsp"
+                        value="Contador"
+                        icon="ui-icon ui-icon-help" ajax="false" />
+                </p:submenu>
+                
+                <p:menuitem value="#{msg['page.logout.title']}"
+                    action="logout?faces-redirect=true"
+                    icon="ui-icon ui-icon-exit" ajax="false" />
+                    
+                <p:menuitem>
+                    <h:selectOneMenu value="#{skinBean.skin}"
+                        onchange="this.form.submit();">
+                        <f:selectItems value="#{skinBean.skinsList}" />
+                    </h:selectOneMenu>
+                </p:menuitem>
+                    
+                <p:menuitem>
+                    <h:selectOneMenu value="#{localeBean.locale}"
+                        valueChangeListener="#{localeBean.changeLocale}"
+                        onchange="this.form.submit()">
+                        <f:selectItems value="#{localeBean.localeList}" />
+                    </h:selectOneMenu>
+                </p:menuitem>
+            </p:menubar>
+        </h:form>
+    </h:panelGroup>
+    <p:panel>
+        <ui:insert name="body" />
+    </p:panel>
+    <h:panelGroup layout="block" styleClass="ui-widget ui-widget-header"
+        style="padding: 4px;">
+        <h:outputText
+            value="#{msg['application.version']} - #{msg['page.sobre.autor']}" />
+    </h:panelGroup>
+</h:body>
+
+</html>

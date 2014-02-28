@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="title">#{msg['page.usuarios.title']}</ui:define>
+    <ui:define name="body">
+
+        <h:form id="usuarioForm">
+            <p:dataTable value="#{usuarioBean.listaUsuarios}"
+                var="usuario" border="1" cellspacing="0" cellpadding="2">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.imprimir']}" />
+                    </f:facet>
+                    <h:commandLink onclick="alert('Eita, mah !!!  :D');" value="#{msg['page.usuarios.label.imprimir']}"/>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.cpf']}" />
+                    </f:facet>
+                    <h:commandLink action="usuariosEditar">
+                        <h:outputText value="#{usuario.cpf}"
+                            converter="converters.CpfConverter" />
+                        <f:setPropertyActionListener
+                            target="#{usuarioBean.usuario}"
+                            value="#{usuario}" />
+                    </h:commandLink>
+                </p:column>
+                 <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.cep']}" />
+                    </f:facet>
+                    <h:outputText value="#{usuario.cep}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.nomeReduzido']}" />
+                    </f:facet>
+                    <h:outputText value="#{usuario.nomeReduzido}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.email']}" />
+                    </f:facet>
+                    <h:outputLink value="mailto:#{usuario.email}">
+                        <h:outputText value="#{usuario.email}" />
+                    </h:outputLink>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.dataNascimento']}" />
+                    </f:facet>
+                    <h:outputText value="#{usuario.dataNascimento}">
+                    	<f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['commons.excluir']}" />
+                    </f:facet>
+                    <p:commandButton action="#{usuarioBean.excluir}"
+                        value="#{msg['commons.excluir']}" ajax="false">
+                        <f:setPropertyActionListener
+                            target="#{usuarioBean.usuario}"
+                            value="#{usuario}" />
+                    </p:commandButton>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText value="#{msg['commons.exibir']}" />
+                    </f:facet>
+                    <p:button outcome="usuariosExibir"
+                        value="#{msg['commons.exibir']}">
+                        <f:param name="id" value="#{usuario.id}" />
+                    </p:button>
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.usuarios.label.imprimir']}" />
+                    </f:facet>
+						<h:commandLink target="blankPopUp" action="usuariosExibir" actionListener="#{usuarioBean.exibir}" value="Imprimir" onclick="window.open('','blankPopUp','status=no,toolbar=no,location=no,menubar=no,resizable,width=1008,height=690,scrollbars,left=100,top=50');">
+							<f:setPropertyActionListener
+                            target="#{usuarioBean.usuario}"
+                            value="#{usuario}" />
+						</h:commandLink>
+                </p:column>
+            </p:dataTable>
+            <hr />
+            <p:commandButton action="#{usuarioBean.novo}"
+                value="#{msg['commons.novo']}" ajax="false" />
+            <p:commandButton action="index"
+                value="#{msg['commons.voltar']}" ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>

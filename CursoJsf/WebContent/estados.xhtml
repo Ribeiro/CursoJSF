@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="title">#{msg['page.estados.title']}</ui:define>
+    <ui:define name="body">
+
+        <h:form>
+            <p:dataTable id="estadosTable" value="#{estadoBean.estados}"
+                var="estado" border="1" cellspacing="0" cellpadding="2"
+                rows="5">
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.estados.label.id']}" />
+                    </f:facet>
+                    <h:outputText value="#{estado.id}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.estados.label.nome']}" />
+                    </f:facet>
+                    <h:outputText value="#{estado.nome}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.estados.label.sigla']}" />
+                    </f:facet>
+                    <h:outputText value="#{estado.sigla}" />
+                </p:column>
+                <p:column>
+                    <f:facet name="header">
+                        <h:outputText
+                            value="#{msg['page.estados.label.editar']}" />
+                    </f:facet>
+                    <p:commandButton action="#{estadoBean.editar}"
+                        value="#{msg['page.estados.label.editar']}"
+                        ajax="false">
+                        <f:setPropertyActionListener
+                            target="#{estadoBean.estado}"
+                            value="#{estado}" />
+                    </p:commandButton>
+                </p:column>
+            </p:dataTable>
+            <hr />
+            <p:commandButton action="#{estadoBean.novo}"
+                value="#{msg['commons.novo']}" ajax="false" />
+            <p:commandButton action="index"
+                value="#{msg['commons.voltar']}" ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>

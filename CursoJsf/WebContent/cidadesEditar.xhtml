@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition template="/WEB-INF/templates/padrao.xhtml"
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.prime.com.tr/ui">
+    <ui:define name="title">#{msg['page.estadosEditar.title']}</ui:define>
+    <ui:define name="body">
+
+        <h:form id="cidadeForm">
+            <h:panelGrid columns="3" columnClasses="rigth,left,left">
+                <h:outputLabel for="idInput"
+                    value="#{msg['page.cidadesEditar.label.id']}:" />
+                <h:inputText id="idInput"
+                    value="#{cidadeBean.cidade.id}" readonly="true"
+                    maxlength="10" size="10" />
+                <h:message for="idInput" errorClass="error" />
+
+                <h:outputLabel for="nomeInput"
+                    value="#{msg['page.cidadesEditar.label.nome']}*:" />
+                <h:inputText id="nomeInput"
+                    value="#{cidadeBean.cidade.nome}" required="true"
+                    maxlength="20" size="20" />
+                <h:message for="nomeInput" errorClass="error" />
+
+                <h:outputLabel for="dataConstituicaoInput"
+                    value="#{msg['page.cidadesEditar.label.dataConstituicao']}*:" />
+                <h:inputText id="dataConstituicaoInput"
+                    value="#{cidadeBean.cidade.dataConstituicao}"
+                    required="true" maxlength="10" size="11">
+                    <f:convertDateTime pattern="dd/MM/yyyy" />
+                </h:inputText>
+                <h:message for="dataConstituicaoInput"
+                    errorClass="error" />
+
+                <h:outputLabel for="populacaoInput"
+                    value="#{msg['page.cidadesEditar.label.populacao']}*:" />
+                <h:inputText id="populacaoInput"
+                    value="#{cidadeBean.cidade.populacao}"
+                    required="true" maxlength="20" size="20">
+                    <f:convertNumber type="number" groupingUsed="true"
+                        minIntegerDigits="1"
+                        locale="#{localeBean.locale}" />
+                </h:inputText>
+                <h:message for="populacaoInput" errorClass="error" />
+
+                <h:outputLabel for="pibInput"
+                    value="#{msg['page.cidadesEditar.label.pib']}*:" />
+                <h:inputText id="pibInput"
+                    value="#{cidadeBean.cidade.pib}" required="true"
+                    maxlength="20" size="20">
+                    <f:convertNumber groupingUsed="true"
+                        maxFractionDigits="2" minFractionDigits="2"
+                        minIntegerDigits="1"
+                        locale="#{localeBean.locale}" />
+                </h:inputText>
+                <h:message for="pibInput" errorClass="error" />
+            </h:panelGrid>
+            <hr />
+            <p:commandButton action="#{cidadeBean.salvar}"
+                value="#{msg['commons.salvar']}" ajax="false" />
+            <p:commandButton action="#{cidadeBean.excluir}"
+                value="#{msg['commons.excluir']}" immediate="true"
+                ajax="false" />
+            <p:commandButton action="estadosEditar"
+                value="#{msg['commons.voltar']}" immediate="true"
+                ajax="false" />
+        </h:form>
+    </ui:define>
+</ui:composition>
+
