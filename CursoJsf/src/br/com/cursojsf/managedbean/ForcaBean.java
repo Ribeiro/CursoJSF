@@ -25,6 +25,8 @@ public class ForcaBean {
     
     private Integer remainingTries = 6;
     
+    private boolean aleatoryWordHasBeenDiscovered = false;
+    
     public Integer getRemainingTries() {
 		return remainingTries;
 	}
@@ -34,19 +36,19 @@ public class ForcaBean {
     public String init() {
     	this.typedWord = "";
     	this.updatedWord = "";
-        numberOfTries = 0;
         remainingTries = 6;
         mensagem = "";
         this.aleatoryWord = generateAleatoryWord();
+        this.updatedWord = mountUnderlinedWord();
         return "forca";
     }
     
     public void updateWord(){
-    	if (this.typedWord != null && !this.typedWord.isEmpty()) {
-
-    		if (numberOfTries <= remainingTries) {
-        		numberOfTries++;
-        		remainingTries--;
+    	if (this.typedWord != null && !this.typedWord.isEmpty() && remainingTries > 0 && !aleatoryWordHasBeenDiscovered) {
+    		remainingTries--;
+    		
+    		if(remainingTries > 0){
+    			
     			char[] aleatoryWordCopy = this.aleatoryWord.substring(0).toCharArray();
     			for (int i = 0; i < aleatoryWordCopy.length; i++) {
     				if (!this.typedWord.contains(String.valueOf(aleatoryWordCopy[i]))) {
@@ -59,13 +61,13 @@ public class ForcaBean {
     			this.updatedWord = String.valueOf(aleatoryWordCopy);
     			
     			if (this.updatedWord.equals(this.aleatoryWord)) {
+    				this.aleatoryWordHasBeenDiscovered = true;
     				this.mensagem = "Você acertou!";
     			}else {
     				this.mensagem = "Você errou. Tente novamente!";
     			}
     			
     		}else {
-    			this.remainingTries = 0;
     			this.mensagem = "Fim de jogo. Você perdeu!";
     			
     		}
@@ -73,6 +75,15 @@ public class ForcaBean {
 		}
     	
     }
+    
+    private String mountUnderlinedWord(){
+    	String result = "";
+    	for (int i = 0; i < this.aleatoryWord.length(); i++) {
+			result = result + "_";
+		}
+    	return result;
+    }
+    
 
 	public String getUpdatedWord() {
 		return updatedWord;
